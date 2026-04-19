@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Claude Design Studio - 강의 슬라이드 빌더 V3.0</title>
+  <title>교사 AI 수업 워크플로우 - Gemini × Claude Design V4.0</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,75 +32,382 @@
     <div class="flex items-center gap-3 lg:gap-6 overflow-x-auto">
       <div class="flex items-center gap-2 flex-shrink-0">
         <div class="w-8 h-8 claude-gradient rounded-lg flex items-center justify-center text-white font-bold shadow-md">🎨</div>
-        <h1 class="text-base lg:text-lg font-bold text-gray-900 tracking-tight whitespace-nowrap">Claude Design Studio</h1>
-        <p class="hidden sm:block text-[10px] text-gray-500 font-medium">강의 슬라이드 빌더 V3.0</p>
+        <h1 class="text-base lg:text-lg font-bold text-gray-900 tracking-tight whitespace-nowrap">교사 AI 워크플로우</h1>
+        <p class="hidden sm:block text-[10px] text-gray-500 font-medium">Gemini × Claude Design V4.0</p>
       </div>
       <nav class="flex space-x-3 lg:space-x-6 h-14 flex-shrink-0">
-        <button onclick="switchTab('builder')" id="btn-builder" class="tab-active h-full flex items-center gap-1 lg:gap-2 text-xs lg:text-sm transition-colors whitespace-nowrap px-2"><i class="fas fa-edit"></i><span class="hidden sm:inline"> 슬라이드 빌더</span><span class="sm:hidden">빌더</span></button>
+        <button onclick="switchTab('gemini')" id="btn-gemini" class="tab-active h-full flex items-center gap-1 lg:gap-2 text-xs lg:text-sm transition-colors whitespace-nowrap px-2"><i class="fas fa-seedling"></i><span class="hidden sm:inline"> Gemini 빌더</span><span class="sm:hidden">Gemini</span></button>
+        <button onclick="switchTab('builder')" id="btn-builder" class="tab-inactive h-full flex items-center gap-1 lg:gap-2 text-xs lg:text-sm transition-colors whitespace-nowrap px-2"><i class="fas fa-palette"></i><span class="hidden sm:inline"> Claude 빌더</span><span class="sm:hidden">Claude</span></button>
         <button onclick="switchTab('templates')" id="btn-templates" class="tab-inactive h-full flex items-center gap-1 lg:gap-2 text-xs lg:text-sm transition-colors whitespace-nowrap px-2"><i class="fas fa-lightbulb"></i><span class="hidden sm:inline"> 추천 템플릿</span><span class="sm:hidden">추천</span></button>
-        <button onclick="switchTab('strengths')" id="btn-strengths" class="tab-inactive h-full flex items-center gap-1 lg:gap-2 text-xs lg:text-sm transition-colors whitespace-nowrap px-2"><i class="fas fa-bolt"></i><span class="hidden sm:inline"> Claude Design 강점</span><span class="sm:hidden">강점</span></button>
+        <button onclick="switchTab('strengths')" id="btn-strengths" class="tab-inactive h-full flex items-center gap-1 lg:gap-2 text-xs lg:text-sm transition-colors whitespace-nowrap px-2"><i class="fas fa-bolt"></i><span class="hidden sm:inline"> AI 협업 강점</span><span class="sm:hidden">강점</span></button>
         <button onclick="switchTab('guide')" id="btn-guide" class="tab-inactive h-full flex items-center gap-1 lg:gap-2 text-xs lg:text-sm transition-colors whitespace-nowrap px-2"><i class="fas fa-book-open"></i><span class="hidden sm:inline"> 사용 설명서</span><span class="sm:hidden">가이드</span></button>
       </nav>
     </div>
     <button onclick="resetAll()" class="bg-gray-100 hover:bg-red-50 text-gray-600 hover:text-red-600 text-xs lg:text-sm font-bold px-2 lg:px-3 py-1.5 rounded-lg border border-gray-200 transition flex items-center gap-1"><i class="fas fa-redo-alt"></i><span class="hidden sm:inline"> 초기화</span></button>
   </header>
-  <main id="view-builder" class="scroll-container flex flex-row">
+
+  <!-- ============ Gemini 빌더 탭 (NEW V4.0) ============ -->
+  <main id="view-gemini" class="scroll-container flex flex-row">
+    <section class="w-1/2 bg-gradient-to-br from-blue-50 to-indigo-50 border-r border-gray-200 flex flex-col">
+      <div class="left-scroll-area custom-scroll p-4 lg:p-6">
+        <div class="max-w-4xl mx-auto space-y-8 pb-20">
+          
+          <!-- 워크플로우 안내 -->
+          <div class="bg-gradient-to-r from-blue-100 to-indigo-100 border-2 border-blue-300 rounded-2xl p-5 shadow-md">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-2xl">🌱</span>
+              <h2 class="text-lg font-black text-blue-900">Step 1. Gemini로 수업 내용 조사</h2>
+            </div>
+            <p class="text-sm text-blue-900 leading-relaxed mb-3">
+              <b>Claude Design은 YouTube/PDF/웹 검색을 못해요.</b><br>
+              그래서 <b>Gemini</b>로 먼저 수업 내용을 조사·정리한 뒤, <b>Claude Design 빌더</b>로 디자인을 생성합니다.
+            </p>
+            <div class="flex items-center gap-2 text-xs text-blue-800 bg-white p-2 rounded-lg">
+              <span class="font-bold">워크플로우:</span>
+              <span>🌱 Gemini</span>
+              <span>→</span>
+              <span>📋 결과 복사</span>
+              <span>→</span>
+              <span>🎨 Claude 빌더</span>
+              <span>→</span>
+              <span>🎊 PPTX 완성</span>
+            </div>
+          </div>
+
+          <!-- A. 정보 소스 -->
+          <div>
+            <h2 class="text-blue-700 font-bold text-sm mb-3 sticky top-0 bg-blue-50/95 backdrop-blur py-2 z-10 border-b border-blue-200 flex items-center">
+              <span class="w-6 h-6 rounded bg-blue-200 text-blue-800 flex items-center justify-center mr-2 text-xs">A</span>
+              정보 소스 (Source Materials)
+            </h2>
+            <div class="bg-white p-3 rounded-xl border border-blue-100 shadow-sm space-y-3">
+              <p class="text-[11px] text-blue-700 bg-blue-50 p-2 rounded border border-blue-100">💡 <b>Gemini의 강점:</b> YouTube/웹사이트/PDF를 직접 분석할 수 있어요! 여러 소스를 조합하면 더 풍부한 수업 자료가 나옵니다.</p>
+              
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">📺 영상 자료</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-source','📺 YouTube 영상 링크:\n[여기에 YouTube URL 붙여넣기]\n\n')" class="chip bg-red-50 border-red-200 text-red-800 px-3 py-1.5 rounded-lg">📺 YouTube 링크</div>
+                  <div onclick="addText('g-source','📺 EBS/KOCW/교사 연수 영상:\n[영상 URL]\n\n')" class="chip bg-red-50 border-red-100 text-red-700 px-2 py-1 rounded">🎬 EBS/교육영상</div>
+                </div>
+              </div>
+
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">📄 문서 자료</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-source','📕 PDF 파일 분석 요청:\n[Gemini에 PDF 파일 직접 업로드 - 교과서, 지도서, 논문 등]\n\n')" class="chip bg-orange-50 border-orange-200 text-orange-800 px-3 py-1.5 rounded-lg">📕 PDF 업로드</div>
+                  <div onclick="addText('g-source','🌐 참고 웹사이트:\n[URL 붙여넣기 - 에듀넷, 인디스쿨, 위키백과 등]\n\n')" class="chip bg-blue-50 border-blue-200 text-blue-800 px-3 py-1.5 rounded-lg">🌐 웹사이트</div>
+                  <div onclick="addText('g-source','📚 교과서/지도서 정보:\n- 출판사: [예: 천재교육]\n- 학년: [중2]\n- 교과: [과학]\n- 단원: [운동과 에너지]\n\n')" class="chip bg-purple-50 border-purple-200 text-purple-800 px-3 py-1.5 rounded-lg">📚 교과서 정보</div>
+                </div>
+              </div>
+
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">📝 직접 입력</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-source','📝 직접 입력 내용:\n[여기에 수업할 내용 메모/스크립트 붙여넣기]\n\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">✍️ 텍스트 메모</div>
+                  <div onclick="addText('g-source','🖼️ 이미지 참고:\n[Gemini에 스크린샷/사진 직접 첨부 - 실험 장면, 현장 사진 등]\n\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">🖼️ 이미지 첨부</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- B. 교과 & 학년 -->
+          <div>
+            <h2 class="text-emerald-700 font-bold text-sm mb-3 sticky top-0 bg-blue-50/95 backdrop-blur py-2 z-10 border-b border-blue-200 flex items-center">
+              <span class="w-6 h-6 rounded bg-emerald-200 text-emerald-800 flex items-center justify-center mr-2 text-xs">B</span>
+              교과 & 학년 (Subject & Grade) <span class="text-red-500 ml-1 text-xs">*필수</span>
+            </h2>
+            <div class="bg-white p-3 rounded-xl border border-blue-100 shadow-sm space-y-3">
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">📚 교과 선택</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="setText('g-subject','교과: 국어')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">📖 국어</div>
+                  <div onclick="setText('g-subject','교과: 수학')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">🔢 수학</div>
+                  <div onclick="setText('g-subject','교과: 과학')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">🔬 과학</div>
+                  <div onclick="setText('g-subject','교과: 사회')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">🌍 사회</div>
+                  <div onclick="setText('g-subject','교과: 영어')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">🔤 영어</div>
+                  <div onclick="setText('g-subject','교과: 체육')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">⚽ 체육</div>
+                  <div onclick="setText('g-subject','교과: 음악')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">🎵 음악</div>
+                  <div onclick="setText('g-subject','교과: 미술')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">🎨 미술</div>
+                  <div onclick="setText('g-subject','교과: 도덕')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">⚖️ 도덕</div>
+                  <div onclick="setText('g-subject','교과: 기술·가정')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">🛠️ 기술·가정</div>
+                  <div onclick="setText('g-subject','교과: 정보')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">💻 정보</div>
+                  <div onclick="setText('g-subject','교과: 진로와 직업')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">🎯 진로</div>
+                  <div onclick="setText('g-subject','교과: 창의적 체험활동')" class="chip bg-emerald-50 border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">✨ 창체</div>
+                </div>
+              </div>
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">🎓 학년 선택</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-subject','\n학년: 초등학교 1-2학년 (저학년)')" class="chip bg-yellow-50 border-yellow-200 text-yellow-800 px-2 py-1 rounded">초 1-2</div>
+                  <div onclick="addText('g-subject','\n학년: 초등학교 3-4학년 (중학년)')" class="chip bg-yellow-50 border-yellow-200 text-yellow-800 px-2 py-1 rounded">초 3-4</div>
+                  <div onclick="addText('g-subject','\n학년: 초등학교 5-6학년 (고학년)')" class="chip bg-yellow-50 border-yellow-200 text-yellow-800 px-2 py-1 rounded">초 5-6</div>
+                  <div onclick="addText('g-subject','\n학년: 중학교 1학년')" class="chip bg-yellow-50 border-yellow-200 text-yellow-800 px-2 py-1 rounded">중 1</div>
+                  <div onclick="addText('g-subject','\n학년: 중학교 2학년')" class="chip bg-yellow-50 border-yellow-200 text-yellow-800 px-2 py-1 rounded">중 2</div>
+                  <div onclick="addText('g-subject','\n학년: 중학교 3학년')" class="chip bg-yellow-50 border-yellow-200 text-yellow-800 px-2 py-1 rounded">중 3</div>
+                  <div onclick="addText('g-subject','\n학년: 고등학교 1학년')" class="chip bg-yellow-50 border-yellow-200 text-yellow-800 px-2 py-1 rounded">고 1</div>
+                  <div onclick="addText('g-subject','\n학년: 고등학교 2-3학년 (선택과목)')" class="chip bg-yellow-50 border-yellow-200 text-yellow-800 px-2 py-1 rounded">고 2-3</div>
+                </div>
+              </div>
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">📖 단원/주제 직접 입력</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-subject','\n단원/주제: [단원명 입력]\n차시: [예: 2/5차시]\n수업 시간: 50분')" class="chip bg-gray-50 border-gray-200 text-gray-800 px-3 py-1.5 rounded-lg">📝 단원 양식</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- C. 학습 목표 -->
+          <div>
+            <h2 class="text-amber-700 font-bold text-sm mb-3 sticky top-0 bg-blue-50/95 backdrop-blur py-2 z-10 border-b border-blue-200 flex items-center">
+              <span class="w-6 h-6 rounded bg-amber-200 text-amber-800 flex items-center justify-center mr-2 text-xs">C</span>
+              학습 목표 (Learning Objectives)
+            </h2>
+            <div class="bg-white p-3 rounded-xl border border-blue-100 shadow-sm">
+              <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">🎯 목표 설정 방식</p>
+              <div class="flex flex-wrap gap-2">
+                <div onclick="setText('g-objectives','학습 목표: Gemini가 교육과정 성취기준에 맞게 3가지 자동 추천')" class="chip bg-amber-50 border-amber-200 text-amber-800 px-3 py-1.5 rounded-lg">🤖 AI 자동 추천</div>
+                <div onclick="setText('g-objectives','학습 목표 (직접 입력):\n1. [학생이 ~을 설명할 수 있다]\n2. [학생이 ~을 비교할 수 있다]\n3. [학생이 ~을 적용할 수 있다]')" class="chip bg-amber-50 border-amber-200 text-amber-800 px-3 py-1.5 rounded-lg">✍️ 직접 입력</div>
+              </div>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <div onclick="addText('g-objectives','\n- 인지 영역 강조 (지식·이해·적용·분석)')" class="chip bg-amber-50 border-amber-100 text-amber-700 px-2 py-1 rounded">🧠 인지 영역</div>
+                <div onclick="addText('g-objectives','\n- 정의 영역 강조 (태도·가치·흥미)')" class="chip bg-amber-50 border-amber-100 text-amber-700 px-2 py-1 rounded">❤️ 정의 영역</div>
+                <div onclick="addText('g-objectives','\n- 심동 영역 강조 (기능·실기)')" class="chip bg-amber-50 border-amber-100 text-amber-700 px-2 py-1 rounded">🏃 심동 영역</div>
+                <div onclick="addText('g-objectives','\n- 2022 개정 교육과정 핵심역량 반영')" class="chip bg-amber-50 border-amber-100 text-amber-700 px-2 py-1 rounded">⭐ 핵심역량</div>
+              </div>
+            </div>
+          </div>
+          <!-- D. 출력 형식 -->
+          <div>
+            <h2 class="text-purple-700 font-bold text-sm mb-3 sticky top-0 bg-blue-50/95 backdrop-blur py-2 z-10 border-b border-blue-200 flex items-center">
+              <span class="w-6 h-6 rounded bg-purple-200 text-purple-800 flex items-center justify-center mr-2 text-xs">D</span>
+              원하는 출력 형식 (Output Structure)
+            </h2>
+            <div class="bg-white p-3 rounded-xl border border-blue-100 shadow-sm space-y-3">
+              <p class="text-[11px] text-purple-700 bg-purple-50 p-2 rounded border border-purple-100">💡 필요한 항목만 선택하세요. Gemini가 이 구조대로 정리해줍니다. 이후 Claude 빌더의 0번 섹션에 통째로 붙여넣기!</p>
+              
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">📋 기본 수업 구조 (도입-전개-정리)</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-output','- 학습 목표 (3가지, 행동동사 포함)\n')" class="chip bg-purple-50 border-purple-200 text-purple-800 px-2 py-1 rounded">🎯 학습목표</div>
+                  <div onclick="addText('g-output','- 도입: 동기유발 (5분, 질문/영상/사진)\n')" class="chip bg-purple-50 border-purple-200 text-purple-800 px-2 py-1 rounded">🎬 도입/동기유발</div>
+                  <div onclick="addText('g-output','- 전개: 핵심 개념 3-5개 (정의+예시)\n')" class="chip bg-purple-50 border-purple-200 text-purple-800 px-2 py-1 rounded">💡 핵심 개념</div>
+                  <div onclick="addText('g-output','- 전개: 실험/실습/활동 가이드 (단계별)\n')" class="chip bg-purple-50 border-purple-200 text-purple-800 px-2 py-1 rounded">🧪 실험/활동</div>
+                  <div onclick="addText('g-output','- 실생활 연결 (일상 예시 5개)\n')" class="chip bg-purple-50 border-purple-200 text-purple-800 px-2 py-1 rounded">🏠 실생활 예시</div>
+                  <div onclick="addText('g-output','- 정리: 핵심 요약 (3줄 요약)\n')" class="chip bg-purple-50 border-purple-200 text-purple-800 px-2 py-1 rounded">📝 정리/요약</div>
+                </div>
+              </div>
+
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">✏️ 평가 & 활동</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-output','- 형성 평가: OX 퀴즈 5문제 (정답+해설)\n')" class="chip bg-pink-50 border-pink-200 text-pink-800 px-2 py-1 rounded">❓ OX 퀴즈</div>
+                  <div onclick="addText('g-output','- 형성 평가: 객관식 5문제 (정답+해설)\n')" class="chip bg-pink-50 border-pink-200 text-pink-800 px-2 py-1 rounded">📝 객관식</div>
+                  <div onclick="addText('g-output','- 형성 평가: 서술형 3문제 (예시 답안)\n')" class="chip bg-pink-50 border-pink-200 text-pink-800 px-2 py-1 rounded">✍️ 서술형</div>
+                  <div onclick="addText('g-output','- 모둠 활동 가이드 (역할 분담, 진행 순서, 시간)\n')" class="chip bg-pink-50 border-pink-200 text-pink-800 px-2 py-1 rounded">👥 모둠 활동</div>
+                  <div onclick="addText('g-output','- 개별 활동지 내용 (워크시트 구성)\n')" class="chip bg-pink-50 border-pink-200 text-pink-800 px-2 py-1 rounded">📋 활동지</div>
+                  <div onclick="addText('g-output','- 수행평가 루브릭 (상/중/하 기준)\n')" class="chip bg-pink-50 border-pink-200 text-pink-800 px-2 py-1 rounded">⭐ 루브릭</div>
+                </div>
+              </div>
+
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">🎓 교사 보조 자료</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-output','- 오개념 주의사항 (학생들이 자주 혼동하는 포인트)\n')" class="chip bg-red-50 border-red-200 text-red-800 px-2 py-1 rounded">⚠️ 오개념 주의</div>
+                  <div onclick="addText('g-output','- 수업 스크립트 (교사 발문 예시)\n')" class="chip bg-red-50 border-red-200 text-red-800 px-2 py-1 rounded">🎙️ 수업 스크립트</div>
+                  <div onclick="addText('g-output','- 판서 계획 (칠판 구성)\n')" class="chip bg-red-50 border-red-200 text-red-800 px-2 py-1 rounded">📏 판서 계획</div>
+                  <div onclick="addText('g-output','- 심화 학습 자료 링크 5개 추천\n')" class="chip bg-red-50 border-red-200 text-red-800 px-2 py-1 rounded">🔗 심화 자료</div>
+                  <div onclick="addText('g-output','- 차별화 수업 (상/중/하 수준별 활동)\n')" class="chip bg-red-50 border-red-200 text-red-800 px-2 py-1 rounded">📊 수준별 활동</div>
+                </div>
+              </div>
+
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">🎨 시각 자료 제안</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-output','- 슬라이드별 추천 이미지 설명 (Unsplash 검색어 포함)\n')" class="chip bg-teal-50 border-teal-200 text-teal-800 px-2 py-1 rounded">🖼️ 이미지 제안</div>
+                  <div onclick="addText('g-output','- 다이어그램/차트 제안 (시각화 아이디어)\n')" class="chip bg-teal-50 border-teal-200 text-teal-800 px-2 py-1 rounded">📊 다이어그램</div>
+                  <div onclick="addText('g-output','- 애니메이션/영상 삽입 추천 지점\n')" class="chip bg-teal-50 border-teal-200 text-teal-800 px-2 py-1 rounded">🎞️ 영상 삽입</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- E. 추가 요구사항 -->
+          <div>
+            <h2 class="text-gray-700 font-bold text-sm mb-3 sticky top-0 bg-blue-50/95 backdrop-blur py-2 z-10 border-b border-blue-200 flex items-center">
+              <span class="w-6 h-6 rounded bg-gray-200 text-gray-800 flex items-center justify-center mr-2 text-xs">E</span>
+              추가 요구사항 (Additional Requirements)
+            </h2>
+            <div class="bg-white p-3 rounded-xl border border-blue-100 shadow-sm space-y-3">
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">📏 난이도 조절</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-extra','- 난이도: 기초 수준 (배경지식 없는 학생 기준)\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">🌱 기초</div>
+                  <div onclick="addText('g-extra','- 난이도: 표준 수준 (평균 학생 기준)\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">🌿 표준</div>
+                  <div onclick="addText('g-extra','- 난이도: 심화 수준 (우수 학생, 경시대회 준비)\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">🌳 심화</div>
+                </div>
+              </div>
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">💬 어조 & 스타일</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-extra','- 어조: 친근한 해요체 (학생 친화적)\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">😊 해요체</div>
+                  <div onclick="addText('g-extra','- 어조: 정중한 합니다체 (공식적)\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">🎓 합니다체</div>
+                  <div onclick="addText('g-extra','- 스토리텔링 방식 (비유·일화 적극 활용)\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">📖 스토리텔링</div>
+                  <div onclick="addText('g-extra','- 간결·핵심 위주 (군더더기 없이)\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">⚡ 간결하게</div>
+                </div>
+              </div>
+              <div>
+                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">🎯 특수 요구</p>
+                <div class="flex flex-wrap gap-2">
+                  <div onclick="addText('g-extra','- 출처: 모든 정보에 출처/근거 명시\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">📎 출처 명시</div>
+                  <div onclick="addText('g-extra','- 한국 맥락: 한국 교육과정·문화·사례 중심\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">🇰🇷 한국 맥락</div>
+                  <div onclick="addText('g-extra','- 융합 요소: 다른 교과와 연계 포인트 포함\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">🔄 교과 융합</div>
+                  <div onclick="addText('g-extra','- 진로 연계: 관련 직업·진로 정보 포함\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">🎯 진로 연계</div>
+                  <div onclick="addText('g-extra','- 안전 수칙: 실험/활동 시 안전 주의사항 명시\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">⚠️ 안전 수칙</div>
+                  <div onclick="addText('g-extra','- 특수교육 고려: 개별화 교육 포인트\n')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">♿ 특수교육</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Gemini 빌더 우측 패널 -->
+    <section class="w-1/2 bg-white flex flex-col">
+      <div class="right-scroll-area custom-scroll p-6">
+        <div class="max-w-2xl mx-auto space-y-5">
+          
+          <div class="bg-blue-50 border-2 border-blue-300 rounded-xl p-4 text-sm text-blue-900">
+            <div class="flex items-start gap-2">
+              <span class="text-2xl">🌱</span>
+              <div>
+                <p class="font-bold mb-1">Gemini 프롬프트 빌더</p>
+                <p class="text-xs leading-relaxed">왼쪽에서 정보 소스·교과·학년·출력 형식을 고르면 Gemini용 완성 프롬프트가 만들어집니다. Gemini에 붙여넣고 결과를 받은 뒤 <b>Claude 빌더 탭</b>으로 이동하세요.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="group">
+            <label class="flex items-center text-sm font-bold text-blue-700 mb-1">
+              <i class="fas fa-file-alt mr-2"></i>A. 정보 소스
+            </label>
+            <textarea id="g-source" rows="4" class="w-full p-3 bg-blue-50 border border-blue-100 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none transition text-sm text-gray-800" placeholder="YouTube 링크, PDF 파일 안내, 웹사이트 URL, 교과서 정보, 직접 메모 등을 입력하세요."></textarea>
+          </div>
+
+          <div class="group">
+            <label class="flex items-center text-sm font-bold text-emerald-700 mb-1">
+              <i class="fas fa-graduation-cap mr-2"></i>B. 교과 & 학년 <span class="text-red-500 ml-1">*</span>
+            </label>
+            <textarea id="g-subject" rows="3" class="w-full p-3 bg-emerald-50 border border-emerald-100 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none transition text-sm text-gray-800" placeholder="교과, 학년, 단원, 차시를 입력하세요."></textarea>
+          </div>
+
+          <div class="group">
+            <label class="flex items-center text-sm font-bold text-amber-700 mb-1">
+              <i class="fas fa-bullseye mr-2"></i>C. 학습 목표
+            </label>
+            <textarea id="g-objectives" rows="3" class="w-full p-3 bg-amber-50 border border-amber-100 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none resize-none transition text-sm text-gray-800" placeholder="학습 목표를 직접 입력하거나 Gemini에게 자동 추천 요청할 수 있습니다."></textarea>
+          </div>
+
+          <div class="group">
+            <label class="flex items-center text-sm font-bold text-purple-700 mb-1">
+              <i class="fas fa-list-check mr-2"></i>D. 원하는 출력 형식
+            </label>
+            <textarea id="g-output" rows="6" class="w-full p-3 bg-purple-50 border border-purple-100 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none resize-none transition text-sm text-gray-800" placeholder="Gemini가 어떤 구조로 정리해줄지 선택하세요. 여러 개 선택 가능."></textarea>
+          </div>
+
+          <div class="group">
+            <label class="flex items-center text-sm font-bold text-gray-700 mb-1">
+              <i class="fas fa-sliders-h mr-2"></i>E. 추가 요구사항
+            </label>
+            <textarea id="g-extra" rows="3" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-gray-400 focus:outline-none resize-none transition text-sm text-gray-800" placeholder="난이도, 어조, 특수 요구사항 (선택)"></textarea>
+          </div>
+
+          <div class="pt-4 pb-2">
+            <button onclick="generateGeminiPrompt()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white text-base font-bold py-3.5 px-8 rounded-full shadow-lg transform hover:-translate-y-1 transition flex items-center justify-center gap-2">
+              <i class="fas fa-seedling"></i>
+              <span>Gemini 프롬프트 생성 & 복사</span>
+            </button>
+            <p class="text-center text-[10px] text-gray-400 mt-2">생성된 프롬프트를 Gemini(gemini.google.com)에 붙여넣으세요</p>
+          </div>
+
+          <!-- 다음 단계 안내 -->
+          <div class="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-300 rounded-xl p-4">
+            <p class="font-bold text-orange-900 text-sm mb-2 flex items-center"><i class="fas fa-arrow-right mr-2"></i>다음 단계</p>
+            <ol class="text-xs text-orange-800 space-y-1 list-decimal pl-5 leading-relaxed">
+              <li>위 버튼 클릭 → Gemini 프롬프트 복사</li>
+              <li><a href="https://gemini.google.com" target="_blank" class="text-blue-600 underline font-bold">gemini.google.com</a> 접속</li>
+              <li>Gemini 채팅창에 <b>PDF/이미지 첨부 + 프롬프트 붙여넣기</b></li>
+              <li>Gemini가 정리한 결과 <b>전체 복사</b></li>
+              <li>상단 <b>🎨 Claude 빌더 탭</b>으로 이동</li>
+              <li>0번 섹션에 <b>Gemini 결과 붙여넣기</b></li>
+              <li>나머지 섹션 채우고 Claude Design 프롬프트 생성</li>
+              <li>Claude Design에서 완성된 PPTX 다운로드!</li>
+            </ol>
+            <button onclick="switchToClaudeBuilderWithFocus()" class="mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition">
+              🎨 Claude 빌더로 이동하기 (0번 섹션 자동 이동) →
+            </button>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- ============ Gemini 빌더 끝 ============ -->
+
+  <main id="view-builder" class="hidden scroll-container flex flex-row">
     <section class="w-1/2 bg-stone-50 border-r border-gray-200 flex flex-col">
       <div class="left-scroll-area custom-scroll p-4 lg:p-6">
         <div class="max-w-4xl mx-auto space-y-10 pb-20">
-        <!-- 0. 시작점 선택 (NEW) -->
+        <!-- 0. 시작점 선택 (V4.1 간소화) -->
         <div>
           <h2 class="text-orange-700 font-bold text-sm mb-3 sticky top-0 bg-stone-50/95 backdrop-blur py-2 z-10 border-b border-stone-200 flex items-center">
             <span class="w-6 h-6 rounded bg-orange-100 text-orange-700 flex items-center justify-center mr-2 text-xs">0</span>
             시작점 선택 (Starting Point) <span class="ml-2 new-badge">NEW</span>
           </h2>
-          <div class="bg-white p-3 rounded-xl border border-gray-100 shadow-sm space-y-3">
-             <p class="text-[11px] text-orange-700 bg-orange-50 p-2 rounded border border-orange-100 mb-2">💡 <b>Claude Design의 핵심 강점:</b> 텍스트뿐 아니라 <b>기존 문서·웹사이트·코드베이스</b>에서 시작할 수 있어요. 어떤 자료로 시작할지 정해보세요. 처음부터 만들기보다 <b>기존 자료 변환</b>이 훨씬 빠르고 정확합니다.</p>
-             
-             <div>
-                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">📂 기존 자료를 변환하기 (추천) - 공식 지원 포맷</p>
+          <div class="bg-white p-3 rounded-xl border border-gray-100 shadow-sm space-y-4">
+             <p class="text-[11px] text-gray-600 bg-gray-50 p-2 rounded border border-gray-100 mb-2">💡 <b>V4.0 워크플로우:</b> Gemini에서 수업 내용을 먼저 정리한 뒤 여기에 붙여넣는 것이 가장 강력합니다. Gemini 없이도 쓸 수 있어요 (아래 대안 경로 참고).</p>
+
+             <!-- 🌱 주요 경로: Gemini 결과 붙여넣기 -->
+             <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-400 rounded-xl p-3 shadow-sm">
+                <p class="text-xs text-blue-900 font-bold mb-2 flex items-center">
+                    <span class="text-base mr-1">🌱</span> 주요 경로: Gemini 결과 붙여넣기 <span class="ml-2 text-[9px] bg-blue-600 text-white px-1.5 py-0.5 rounded">추천</span>
+                </p>
+                <p class="text-[11px] text-blue-800 mb-2 leading-relaxed">
+                    Gemini 빌더에서 수업 자료를 먼저 만들었다면, 아래 칩 클릭 후 <b>우측 "0. 시작점 선택" textarea에 결과를 붙여넣기(Ctrl+V)</b> 하세요.
+                </p>
                 <div class="flex flex-wrap gap-2">
-                    <div onclick="setText('in-start','시작점: 기존 PPTX 파일 업로드 - 이전에 만든 PPT를 Claude Design에 첨부하고 [디자인 스타일만 바꿔줘/내용을 업데이트해줘/발표 톤을 학부모용으로 바꿔줘] 식으로 지시')" class="chip bg-orange-50 border-orange-200 text-orange-900 px-3 py-1.5 rounded-lg">📊 기존 PPTX 업로드</div>
-                    <div onclick="setText('in-start','시작점: DOCX 문서 업로드 - 워드로 쓴 강의 스크립트/원고/연구 보고서를 첨부하고 슬라이드로 변환 요청. 긴 문서 → 압축된 시각 자료')" class="chip bg-orange-50 border-orange-200 text-orange-900 px-3 py-1.5 rounded-lg">📄 DOCX 업로드</div>
-                    <div onclick="setText('in-start','시작점: XLSX 데이터 업로드 - 엑셀 데이터(설문결과/성적/통계)를 첨부하여 차트·인포그래픽 중심 슬라이드로 변환')" class="chip bg-orange-50 border-orange-200 text-orange-900 px-3 py-1.5 rounded-lg">📈 XLSX 데이터</div>
-                    <div onclick="setText('in-start','시작점: 이미지 업로드 - 스크린샷/사진/스케치를 첨부하여 디자인 레퍼런스로 활용')" class="chip bg-orange-50 border-orange-200 text-orange-900 px-3 py-1.5 rounded-lg">🖼️ 이미지 업로드</div>
+                    <div onclick="setText('in-start','🌱 [Gemini에서 복사한 수업 자료]\n\n[여기에 Gemini 결과를 붙여넣기(Ctrl+V) 하세요]\n\n---\n위 내용을 바탕으로 슬라이드를 생성해주세요.')" class="chip bg-blue-600 text-white border-blue-700 px-3 py-1.5 rounded-lg hover:bg-blue-700 shadow-md font-bold">🌱 Gemini 결과 붙여넣기 양식</div>
+                    <div onclick="switchTab('gemini')" class="chip bg-white border-blue-300 text-blue-700 px-3 py-1.5 rounded-lg">← Gemini 빌더로 돌아가기</div>
                 </div>
              </div>
 
-             <div>
-                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">🌐 웹사이트 레퍼런스 가져오기 (Web Capture)</p>
-                <p class="text-[10px] text-blue-700 bg-blue-50 p-1.5 rounded mb-2">💡 Claude Design에 웹 캡처 도구가 있어 웹사이트 요소를 참고 가능. 아래는 예시일 뿐, <b>자기가 좋아하는 사이트 URL을 직접 입력</b>하면 됩니다.</p>
+             <!-- ✍️ 대안 경로: 직접 입력 -->
+             <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                <p class="text-xs text-gray-700 font-bold mb-2 flex items-center">
+                    <span class="text-base mr-1">✍️</span> 대안 경로: Gemini 없이 직접 입력
+                </p>
+                <p class="text-[11px] text-gray-600 mb-2 leading-relaxed">
+                    이미 내용을 다 알고 있는 경우 (책 강연, 우수사례, 본인 앱 소개 등)에는 Gemini 없이 바로 시작할 수 있어요. 아래 칩을 클릭한 뒤 우측 textarea에 <b>강의 주제와 핵심 내용을 직접 입력</b>하세요.
+                </p>
                 <div class="flex flex-wrap gap-2">
-                    <div onclick="setText('in-start','시작점: Web Capture - 레퍼런스 사이트 URL을 Claude Design에 제공\n참고 URL: [여기에 레퍼런스 사이트 주소 입력]\n→ Claude Design이 해당 사이트를 참고하여 슬라이드 디자인에 반영')" class="chip bg-blue-50 border-blue-200 text-blue-900 px-3 py-1.5 rounded-lg">🌐 레퍼런스 URL 직접 입력</div>
+                    <div onclick="setText('in-start','시작점: 직접 입력\n\n강의 주제: [여기에 입력]\n\n핵심 내용:\n- \n- \n- \n\n(더 많은 상황별 예시는 상단 추천 템플릿 탭을 참고하세요)')" class="chip bg-gray-100 border-gray-300 text-gray-800 px-3 py-1.5 rounded-lg hover:bg-gray-200 font-bold">✍️ 직접 입력 양식</div>
+                    <div onclick="switchTab('templates')" class="chip bg-white border-gray-300 text-gray-700 px-3 py-1.5 rounded-lg">💡 추천 템플릿 보러가기 →</div>
                 </div>
              </div>
 
-             <div>
-                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">✍️ 처음부터 만들기 (Text Prompt)</p>
+             <!-- 📂 고급: 기존 파일 재활용 -->
+             <div class="bg-orange-50 border border-orange-200 rounded-xl p-3">
+                <p class="text-xs text-orange-800 font-bold mb-2 flex items-center">
+                    <span class="text-base mr-1">📂</span> 고급: 기존 파일 재활용 (리뉴얼용)
+                </p>
+                <p class="text-[11px] text-orange-700 mb-2 leading-relaxed">
+                    이전에 만든 PPT나 워드 문서를 <b>새 디자인으로 리뉴얼</b>하고 싶을 때만 사용하세요. Claude Design에서 파일을 직접 첨부하면 됩니다.
+                </p>
                 <div class="flex flex-wrap gap-2">
-                    <div onclick="setText('in-start','시작점: 텍스트 프롬프트 - 주제와 핵심 내용을 입력하여 처음부터 생성')" class="chip bg-gray-50 border-gray-200 text-gray-800 px-3 py-1.5 rounded-lg">✍️ 텍스트로 시작</div>
-                    <div onclick="addText('in-start','\n- 추가 자료 텍스트로 붙여넣기: [강의 스크립트/메모/참고자료 등]')" class="chip bg-gray-50 border-gray-200 text-gray-700 px-2 py-1 rounded">📝 스크립트 붙여넣기</div>
-                </div>
-             </div>
-
-             <div>
-                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">💻 코드베이스 연결 (고급)</p>
-                <div class="flex flex-wrap gap-2">
-                    <div onclick="setText('in-start','시작점: 코드베이스/GitHub 레포 연결 - 내가 만든 웹앱의 실제 화면·컴포넌트를 가져와 자료에 삽입 (예: 스쌤콜·유콜 앱 소개용)')" class="chip bg-purple-50 border-purple-200 text-purple-900 px-3 py-1.5 rounded-lg">💻 GitHub 레포 연결</div>
-                </div>
-             </div>
-
-             <div>
-                <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-wider">📌 강의 주제 (예시 빠른 입력)</p>
-                <div class="flex flex-wrap gap-2">
-                    <div onclick="addText('in-start','\n\n강의 주제: GAS 바이브 코딩 입문 - 첫 웹앱 만들기 (90분)')" class="chip bg-amber-50 border-amber-100 text-amber-800 px-2 py-1 rounded">🛠️ 코딩 입문</div>
-                    <div onclick="addText('in-start','\n\n강의 주제: AI 시대 교사의 역할 변화 (60분)')" class="chip bg-amber-50 border-amber-100 text-amber-800 px-2 py-1 rounded">🤖 AI 교사 연수</div>
-                    <div onclick="addText('in-start','\n\n강의 주제: 우수사례 발표 - 교사 업무 자동화 앱 개발 (15분)')" class="chip bg-amber-50 border-amber-100 text-amber-800 px-2 py-1 rounded">🏆 우수사례</div>
-                    <div onclick="addText('in-start','\n\n강의 주제: 학부모 대상 - 자녀의 안전한 AI 사용법 (25분)')" class="chip bg-amber-50 border-amber-100 text-amber-800 px-2 py-1 rounded">👨‍👩‍👧 학부모 설명회</div>
-                    <div onclick="addText('in-start','\n\n강의 주제: 중학교 수업 - AI 윤리 (50분 학생용)')" class="chip bg-amber-50 border-amber-100 text-amber-800 px-2 py-1 rounded">🎓 학생 수업</div>
-                    <div onclick="addText('in-start','\n\n강의 주제: 책 출간 기념 강연 (60분)')" class="chip bg-amber-50 border-amber-100 text-amber-800 px-2 py-1 rounded">📖 책 강연</div>
-                    <div onclick="addText('in-start','\n\n강의 주제: 연구대회 발표 (20분)')" class="chip bg-amber-50 border-amber-100 text-amber-800 px-2 py-1 rounded">🔬 연구대회</div>
-                    <div onclick="addText('in-start','\n\n강의 주제: SNS 카드뉴스 - 교사가 꼭 알아야 할 AI 팁 5가지')" class="chip bg-amber-50 border-amber-100 text-amber-800 px-2 py-1 rounded">📱 SNS 카드뉴스</div>
+                    <div onclick="setText('in-start','시작점: 기존 PPTX 파일 업로드\nClaude Design에 이전 PPTX 파일을 첨부한 뒤, [디자인 스타일만 바꿔줘 / 내용을 업데이트해줘 / 발표 톤을 바꿔줘] 식으로 지시')" class="chip bg-white border-orange-200 text-orange-800 px-3 py-1 rounded-lg text-xs">📊 기존 PPTX 리뉴얼</div>
+                    <div onclick="setText('in-start','시작점: DOCX 문서 업로드\nClaude Design에 강의 원고/스크립트 DOCX를 첨부하여 슬라이드로 변환 요청')" class="chip bg-white border-orange-200 text-orange-800 px-3 py-1 rounded-lg text-xs">📄 DOCX → 슬라이드</div>
                 </div>
              </div>
           </div>
@@ -495,6 +802,21 @@
     <section class="w-1/2 bg-white flex flex-col">
       <div class="right-scroll-area custom-scroll p-6">
         <div class="max-w-2xl mx-auto space-y-5">
+          <!-- V4.0 NEW: Gemini 결과 붙여넣기 안내 배너 -->
+          <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-400 rounded-xl p-4 text-sm text-blue-900 shadow-sm">
+            <div class="flex items-start gap-2 mb-2">
+              <span class="text-2xl">🌱</span>
+              <div class="flex-1">
+                <p class="font-bold mb-1">Gemini 결과가 있나요?</p>
+                <p class="text-xs leading-relaxed">Gemini에서 복사한 수업 자료가 있다면 아래 <b>"0. 시작점 선택"</b> 칸에 바로 <b>Ctrl+V</b>로 붙여넣으세요!<br>없다면 그냥 아래 섹션들을 선택하면 됩니다.</p>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-2">
+              <button onclick="switchTab('gemini')" class="flex-1 text-xs py-1.5 px-3 bg-white border border-blue-300 text-blue-700 font-bold rounded-lg hover:bg-blue-100 transition">← Gemini 빌더로 돌아가기</button>
+              <button onclick="document.getElementById('in-start').focus(); document.getElementById('in-start').classList.add('ring-4','ring-blue-400'); setTimeout(()=>document.getElementById('in-start').classList.remove('ring-4','ring-blue-400'),2000);" class="flex-1 text-xs py-1.5 px-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition">↓ 0번 섹션으로 가기</button>
+            </div>
+          </div>
+
           <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2">
             <i class="fas fa-bolt text-amber-600 mt-0.5"></i>
             <div><b>Claude Design 한도 절약 팁:</b> 이 빌더의 핵심은 <b>한 방에 좋은 결과</b>를 뽑는 거예요. 입력이 자세할수록 재시도 횟수가 줄어 한도가 절약됩니다. 필수는 <b>2번(강의 형식)뿐</b>, 나머지는 비워두면 AI가 자동 보완합니다.</div>
@@ -502,7 +824,7 @@
 
           <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-xs text-indigo-900 flex items-start gap-2">
             <i class="fas fa-magic text-indigo-600 mt-0.5"></i>
-            <div><b>V3.0 핵심 전략:</b> Claude Design의 강점인 <b>파일 업로드/웹 캡처/디자인 시스템</b>을 최대한 활용하도록 프롬프트가 설계되었습니다. 처음부터 만들지 말고 기존 자료를 재활용하세요!</div>
+            <div><b>V4.0 핵심 전략:</b> Claude Design의 강점인 <b>파일 업로드/웹 캡처/디자인 시스템</b>을 최대한 활용하도록 프롬프트가 설계되었습니다. 처음부터 만들지 말고 기존 자료를 재활용하세요!</div>
           </div>
 
           <div class="group">
@@ -596,8 +918,130 @@
   <main id="view-strengths" class="hidden scroll-container overflow-y-auto custom-scroll bg-stone-50 p-6 md:p-10">
     <div class="max-w-5xl mx-auto pb-20">
         <div class="text-center mb-10">
-            <h2 class="text-3xl font-black text-gray-800 mb-3">⚡ Claude Design, 왜 써야 할까요?</h2>
-            <p class="text-gray-500 text-sm">기존 PPT 제작 방식과 완전히 다른 <b>10가지 핵심 강점</b>입니다.<br>이 강점을 활용하도록 빌더가 설계되었어요.</p>
+            <h2 class="text-3xl font-black text-gray-800 mb-3">⚡ AI 협업 전략 + Claude Design 강점</h2>
+            <p class="text-gray-500 text-sm">각 AI의 강점을 조합하는 <b>릴레이 워크플로우</b>와 <b>Claude Design 10가지 강점</b>을 소개합니다.</p>
+        </div>
+
+        <!-- AI 협업 전략 섹션 (NEW V4.0) -->
+        <div class="mb-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-3xl p-8 border-2 border-indigo-200 shadow-sm">
+            <h3 class="text-2xl font-black text-gray-900 mb-2 flex items-center"><span class="text-3xl mr-3">🤝</span>AI 릴레이 워크플로우</h3>
+            <p class="text-sm text-gray-700 mb-6">각 AI의 진짜 강점만 뽑아서 조합하는 <b>역할 분담 전략</b>입니다.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <!-- Gemini 카드 -->
+                <div class="bg-white rounded-2xl p-5 border-2 border-blue-400 shadow-md">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center text-2xl shadow-md">🌱</div>
+                        <div>
+                            <p class="font-black text-blue-900">Gemini</p>
+                            <p class="text-[10px] text-gray-500">정보 수집 · 분석</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-700 leading-relaxed mb-3"><b>강점:</b> YouTube/PDF/웹사이트 직접 분석 + 실시간 검색</p>
+                    <div class="space-y-1 text-[11px] text-gray-600">
+                        <p>✅ YouTube 영상 시청/분석</p>
+                        <p>✅ PDF 파일 업로드 분석</p>
+                        <p>✅ 웹사이트 URL 읽기</p>
+                        <p>✅ 최신 검색 + 출처 명시</p>
+                        <p>✅ 긴 문서 요약 정리</p>
+                    </div>
+                    <div class="mt-3 p-2 bg-blue-50 rounded-lg text-[10px] text-blue-800">
+                        <b>쓸 때:</b> 수업 내용 조사·정리
+                    </div>
+                </div>
+
+                <!-- Claude Design 카드 -->
+                <div class="bg-white rounded-2xl p-5 border-2 border-orange-400 shadow-md">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="w-12 h-12 rounded-xl claude-gradient text-white flex items-center justify-center text-2xl shadow-md">🎨</div>
+                        <div>
+                            <p class="font-black text-orange-900">Claude Design</p>
+                            <p class="text-[10px] text-gray-500">디자인 · 시각화</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-700 leading-relaxed mb-3"><b>강점:</b> PPTX 수준의 디자인 퀄리티 + 브랜드 일관성</p>
+                    <div class="space-y-1 text-[11px] text-gray-600">
+                        <p>✅ PPTX 파일 직접 export</p>
+                        <p>✅ 고퀄리티 슬라이드 생성</p>
+                        <p>✅ 브랜드 디자인 시스템</p>
+                        <p>✅ 인터랙티브 프로토타입</p>
+                        <p>✅ Canva/HTML 다양한 출력</p>
+                    </div>
+                    <div class="mt-3 p-2 bg-orange-50 rounded-lg text-[10px] text-orange-800">
+                        <b>쓸 때:</b> 최종 슬라이드 디자인
+                    </div>
+                </div>
+
+                <!-- 일반 Claude 카드 -->
+                <div class="bg-white rounded-2xl p-5 border-2 border-purple-300 shadow-md">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 text-white flex items-center justify-center text-2xl shadow-md">💬</div>
+                        <div>
+                            <p class="font-black text-purple-900">일반 Claude</p>
+                            <p class="text-[10px] text-gray-500">보조 대안</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-700 leading-relaxed mb-3"><b>강점:</b> PDF 분석 + 웹 검색 (Gemini 대체 가능)</p>
+                    <div class="space-y-1 text-[11px] text-gray-600">
+                        <p>✅ PDF 파일 업로드</p>
+                        <p>✅ 웹 검색 도구</p>
+                        <p>✅ Artifacts로 간단 슬라이드</p>
+                        <p>❌ YouTube 직접 분석 X</p>
+                        <p>🟡 디자인 퀄리티는 보통</p>
+                    </div>
+                    <div class="mt-3 p-2 bg-purple-50 rounded-lg text-[10px] text-purple-800">
+                        <b>쓸 때:</b> Gemini 대안 필요 시
+                    </div>
+                </div>
+            </div>
+
+            <!-- 워크플로우 도식 -->
+            <div class="bg-white rounded-2xl p-5 border border-indigo-200">
+                <p class="font-bold text-gray-900 text-sm mb-4 text-center">🔄 릴레이 흐름</p>
+                <div class="flex items-center justify-center gap-3 flex-wrap">
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl mb-2 shadow-md">🌱</div>
+                        <p class="text-xs font-bold text-blue-900">Gemini</p>
+                        <p class="text-[10px] text-gray-500">내용 정리</p>
+                    </div>
+                    <div class="text-2xl text-gray-400">→</div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto bg-gray-200 rounded-2xl flex items-center justify-center text-2xl mb-2">📋</div>
+                        <p class="text-xs font-bold text-gray-700">복사</p>
+                        <p class="text-[10px] text-gray-500">결과 전달</p>
+                    </div>
+                    <div class="text-2xl text-gray-400">→</div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto claude-gradient rounded-2xl flex items-center justify-center text-white text-2xl mb-2 shadow-md">🎨</div>
+                        <p class="text-xs font-bold text-orange-900">Claude Design</p>
+                        <p class="text-[10px] text-gray-500">디자인 생성</p>
+                    </div>
+                    <div class="text-2xl text-gray-400">→</div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white text-2xl mb-2 shadow-md">📊</div>
+                        <p class="text-xs font-bold text-green-900">PPTX</p>
+                        <p class="text-[10px] text-gray-500">완성!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 토큰 절약 효과 -->
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white rounded-xl p-4 border border-green-300">
+                    <p class="font-bold text-green-800 text-sm mb-2 flex items-center"><span class="mr-2">💰</span>토큰 3~4배 절약</p>
+                    <p class="text-xs text-gray-600 leading-relaxed">한 방에 완성된 프롬프트로 재시도 최소화. Claude Design 한도를 크게 아낄 수 있어요.</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-green-300">
+                    <p class="font-bold text-green-800 text-sm mb-2 flex items-center"><span class="mr-2">⏱️</span>5분 만에 완성</p>
+                    <p class="text-xs text-gray-600 leading-relaxed">Gemini 2분 + Claude 3분 = 총 5분. 기존 수업 준비 대비 10배 이상 빠릅니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 아래는 기존 Claude Design 10가지 강점 섹션 -->
+        <div class="text-center mb-8 border-t-2 border-gray-200 pt-10">
+            <h3 class="text-2xl font-black text-gray-800 mb-2">🎨 Claude Design 10가지 강점</h3>
+            <p class="text-gray-500 text-sm">기존 PPT 제작 방식과 완전히 다른 핵심 강점입니다.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
@@ -625,7 +1069,7 @@
                     <h3 class="text-lg font-bold text-gray-900">Web Capture로 레퍼런스 가져오기</h3>
                 </div>
                 <p class="text-sm text-gray-600 leading-relaxed"><b>웹사이트 URL을 제공하면</b> 해당 사이트의 요소를 참고해 슬라이드에 반영. 자기가 좋아하는 디자인 톤의 사이트 URL을 주면 그 분위기를 담아낼 수 있어요.</p>
-                <p class="text-[11px] text-orange-700 bg-orange-50 p-2 rounded mt-3">✨ <b>빌더 활용:</b> 0번 섹션의 "레퍼런스 URL 직접 입력" 칩 활용. Toss, Notion 등 자기 맘에 드는 사이트를 자유롭게.</p>
+                <p class="text-[11px] text-orange-700 bg-orange-50 p-2 rounded mt-3">✨ <b>활용 팁:</b> Claude Design에서 직접 레퍼런스 URL을 제공하면 돼요. Toss, Notion 등 자기 맘에 드는 사이트를 자유롭게.</p>
             </div>
 
             <div class="bg-white rounded-2xl border border-indigo-200 p-6 shadow-sm">
@@ -725,24 +1169,128 @@
   <!-- 사용 설명서 탭 -->
   <main id="view-guide" class="hidden scroll-container overflow-y-auto custom-scroll bg-stone-50 p-6 md:p-10">
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-      <h2 class="text-2xl font-black text-gray-800 mb-6 flex items-center"><span class="w-10 h-10 claude-gradient text-white rounded-xl flex items-center justify-center mr-3 text-xl">📖</span>Claude Design Studio V3.0 사용법</h2>
+      <h2 class="text-2xl font-black text-gray-800 mb-6 flex items-center"><span class="w-10 h-10 claude-gradient text-white rounded-xl flex items-center justify-center mr-3 text-xl">📖</span>교사 AI 워크플로우 사용 설명서 V4.0</h2>
 
-      <!-- 시작하기: 이 도구가 뭔가요? -->
-      <div class="mb-8 p-5 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-orange-200">
-          <h3 class="font-bold text-gray-900 text-lg mb-3 flex items-center"><i class="fas fa-question-circle mr-2 text-orange-600"></i>📌 이 도구가 뭐예요?</h3>
-          <p class="text-sm text-gray-700 leading-relaxed mb-3">
-            <b>Claude Design에서 "한 방에 좋은 결과"를 뽑아내기 위한 프롬프트 생성기</b>입니다.<br>
-            Claude Design은 주간 한도가 빡빡해서 재시도 한 번이 아까워요. 이 빌더로 미리 <b>완벽한 프롬프트</b>를 만들어두면 <b>한도를 3~4배 절약</b>할 수 있어요.
+      <!-- 왜 이렇게 만들었나 -->
+      <div class="mb-8 p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl border-2 border-indigo-300 shadow-sm">
+          <h3 class="font-black text-gray-900 text-xl mb-4 flex items-center"><i class="fas fa-lightbulb mr-2 text-indigo-600"></i>💡 왜 이렇게 만들었나?</h3>
+          <p class="text-sm text-gray-800 leading-relaxed mb-4">
+            처음엔 <b>Claude Design 전용 슬라이드 빌더</b>만 있었어요. 근데 실제로 써보니 치명적 문제가 있더라고요.
           </p>
-          <div class="grid grid-cols-2 gap-3 mt-3 text-xs">
-            <div class="bg-red-50 border border-red-200 rounded-lg p-3">
-              <p class="font-bold text-red-800 mb-1">🔴 일반적 사용 (토큰 낭비)</p>
-              <p class="text-red-700 leading-relaxed">AI에 질문하고 답하고, 수정 요청하고, 또 수정하고... 대화 왕복 10번</p>
+          <div class="bg-white rounded-lg p-4 border border-red-200 mb-4">
+            <p class="text-sm font-bold text-red-700 mb-2">🚨 발견한 문제</p>
+            <p class="text-xs text-gray-700 leading-relaxed">
+              수업 준비할 때 <b>YouTube 링크를 넣어도, PDF를 업로드해도 Claude Design이 내용을 못 읽어요.</b> 그러면 AI가 그럴듯해 보이지만 완전히 엉뚱한 내용을 만들어냅니다. 예를 들어 "마찰력 수업"을 부탁했는데 "식물의 한살이"가 나오는 식으로요.
+            </p>
+          </div>
+          <p class="text-sm text-gray-800 leading-relaxed mb-4">
+            그래서 <b>각 AI의 진짜 강점</b>을 다시 조사했어요:
+          </p>
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="bg-white rounded-lg p-4 border-2 border-blue-300">
+              <p class="font-bold text-blue-800 text-sm mb-2 flex items-center"><span class="text-xl mr-2">🌱</span>Gemini의 강점</p>
+              <ul class="text-xs text-gray-700 space-y-1 leading-relaxed list-disc pl-5">
+                <li><b>YouTube 영상 직접 분석</b> ✅</li>
+                <li><b>PDF 파일 업로드 지원</b> ✅</li>
+                <li><b>웹사이트 URL 읽기</b> ✅</li>
+                <li><b>인터넷 실시간 검색</b> ✅</li>
+                <li><b>정보 수집·정리 최강</b></li>
+              </ul>
             </div>
-            <div class="bg-green-50 border border-green-200 rounded-lg p-3">
-              <p class="font-bold text-green-800 mb-1">🟢 이 빌더 사용 (토큰 절약)</p>
-              <p class="text-green-700 leading-relaxed">완성된 프롬프트를 한 번에 붙여넣기 → 완성된 슬라이드 바로 생성</p>
+            <div class="bg-white rounded-lg p-4 border-2 border-orange-300">
+              <p class="font-bold text-orange-800 text-sm mb-2 flex items-center"><span class="text-xl mr-2">🎨</span>Claude Design의 강점</p>
+              <ul class="text-xs text-gray-700 space-y-1 leading-relaxed list-disc pl-5">
+                <li><b>PPTX 파일로 직접 export</b> ✅</li>
+                <li><b>디자인 퀄리티가 압도적</b> ✅</li>
+                <li><b>브랜드 일관성 자동 적용</b> ✅</li>
+                <li><b>인터랙티브 프로토타입</b> ✅</li>
+                <li><b>시각 디자인 최강</b></li>
+              </ul>
             </div>
+          </div>
+          <div class="bg-indigo-600 text-white rounded-lg p-4">
+            <p class="font-black text-center text-base">💎 결론: 두 AI를 조합해서 쓰자!</p>
+            <p class="text-sm text-center mt-2 text-indigo-100">
+              <b>수업 자료 분석·정리는 Gemini</b>가 최고,<br>
+              <b>디자인은 Claude Design</b>이 최고.<br>
+              각자의 강점을 살리는 <b>릴레이 워크플로우</b>가 정답입니다.
+            </p>
+          </div>
+      </div>
+
+      <!-- V4.0 전체 워크플로우 -->
+      <div class="mb-8 p-5 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-orange-200">
+          <h3 class="font-bold text-gray-900 text-lg mb-4 flex items-center"><i class="fas fa-route mr-2 text-orange-600"></i>🛤️ V4.0 통합 워크플로우</h3>
+          <div class="bg-white rounded-xl p-4 mb-4">
+            <div class="flex items-center justify-between text-xs font-bold text-gray-600 mb-3">
+              <span>📥 정보 수집</span>
+              <span>→</span>
+              <span>📝 구조화</span>
+              <span>→</span>
+              <span>🎨 디자인</span>
+              <span>→</span>
+              <span>📤 Export</span>
+            </div>
+            <div class="space-y-3 text-sm">
+              <div class="flex items-start gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+                <div>
+                  <p class="font-bold text-blue-900">🌱 Gemini 빌더 탭</p>
+                  <p class="text-xs text-blue-800 mt-1">수업 내용 조사할 것 설정 (YouTube 링크, PDF, 교과서 등) → Gemini용 프롬프트 생성</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+                <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
+                <div>
+                  <p class="font-bold text-indigo-900">🤖 Gemini에 붙여넣기</p>
+                  <p class="text-xs text-indigo-800 mt-1">gemini.google.com 접속 → PDF/이미지 첨부 → 프롬프트 붙여넣기 → 결과 복사</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 p-3 bg-orange-50 rounded-lg border border-orange-200">
+                <span class="flex-shrink-0 w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
+                <div>
+                  <p class="font-bold text-orange-900">🎨 Claude 빌더 탭</p>
+                  <p class="text-xs text-orange-800 mt-1">0번 섹션에 Gemini 결과 붙여넣기 → 디자인 요소 선택 → Claude 프롬프트 생성</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                <span class="flex-shrink-0 w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">4</span>
+                <div>
+                  <p class="font-bold text-green-900">🚀 Claude Design에 붙여넣기</p>
+                  <p class="text-xs text-green-800 mt-1">claude.ai/design 접속 → 프롬프트 붙여넣기 → PPTX export → 완성!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-yellow-100 border border-yellow-300 rounded-lg p-3 text-xs text-yellow-900">
+            <b>⏱️ 예상 소요 시간:</b> Gemini 2분 + Claude 3분 = 총 <b>5분 만에 고품질 수업 슬라이드</b> 완성!
+          </div>
+      </div>
+
+      <!-- 시나리오별 - 언제 뭘 쓰나 -->
+      <div class="mb-8">
+          <h3 class="font-bold text-gray-900 text-xl mb-4 flex items-center"><i class="fas fa-bullseye mr-2 text-purple-600"></i>🎯 상황별 사용법</h3>
+          <div class="space-y-3">
+              <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                  <p class="font-bold text-gray-900 mb-2">📚 일반 교과 수업 준비</p>
+                  <p class="text-xs text-gray-600 leading-relaxed mb-2">교과서 내용, YouTube 설명 영상, 지도서 등을 분석해 슬라이드 제작</p>
+                  <p class="text-xs"><span class="font-bold text-blue-700">→ 🌱 Gemini 빌더</span> (정보 수집 필수) <b>+</b> <span class="font-bold text-orange-700">🎨 Claude 빌더</span> (디자인)</p>
+              </div>
+              <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                  <p class="font-bold text-gray-900 mb-2">🏆 우수사례 · 책 강연 · 연수 발표</p>
+                  <p class="text-xs text-gray-600 leading-relaxed mb-2">본인이 이미 내용을 다 알고 있음. 디자인 퀄리티가 핵심</p>
+                  <p class="text-xs"><span class="font-bold text-orange-700">→ 🎨 Claude 빌더</span>만 사용 (Gemini 생략 가능)</p>
+              </div>
+              <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                  <p class="font-bold text-gray-900 mb-2">🔍 연구대회 · 최신 자료 기반 발표</p>
+                  <p class="text-xs text-gray-600 leading-relaxed mb-2">논문 PDF, 최신 웹 기사, 통계 데이터 분석 필요</p>
+                  <p class="text-xs"><span class="font-bold text-blue-700">→ 🌱 Gemini 빌더</span> (PDF/웹 분석) <b>+</b> <span class="font-bold text-orange-700">🎨 Claude 빌더</span> (학술적 디자인)</p>
+              </div>
+              <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                  <p class="font-bold text-gray-900 mb-2">📱 SNS 카드뉴스 · 간단 자료</p>
+                  <p class="text-xs text-gray-600 leading-relaxed mb-2">본인 생각/경험 정리. 이미지 중심 디자인</p>
+                  <p class="text-xs"><span class="font-bold text-orange-700">→ 🎨 Claude 빌더</span>만 사용</p>
+              </div>
           </div>
       </div>
 
@@ -1129,7 +1677,7 @@
 
   <footer style="text-align: center; padding: 20px 0; color: #888; font-size: 13px; font-family: sans-serif; line-height: 1.6;" class="shrink-0">
     <div>Developed by <strong>김주현(광평중)</strong> &nbsp;|&nbsp; <a href="https://instagram.com/kimju.zip" target="_blank" style="text-decoration: none; color: #E1306C; font-weight: bold;">💟 @kimju.zip</a></div>
-    <div style="font-size: 11px; opacity: 0.8;">Claude Design Studio V3.0 &copy; 2026. All Rights Reserved.</div>
+    <div style="font-size: 11px; opacity: 0.8;">교사 AI 워크플로우 V4.0 - Gemini × Claude Design &copy; 2026. All Rights Reserved.</div>
   </footer>
 
   <!-- 모달들 -->
@@ -1165,12 +1713,45 @@
 
   <script>
     function switchTab(tabName) {
-        const views = ['view-builder', 'view-templates', 'view-strengths', 'view-guide'];
-        const buttons = ['btn-builder', 'btn-templates', 'btn-strengths', 'btn-guide'];
+        const views = ['view-gemini', 'view-builder', 'view-templates', 'view-strengths', 'view-guide'];
+        const buttons = ['btn-gemini', 'btn-builder', 'btn-templates', 'btn-strengths', 'btn-guide'];
         views.forEach(v => document.getElementById(v).classList.add('hidden'));
         buttons.forEach(b => document.getElementById(b).className = 'tab-inactive h-full flex items-center gap-1 lg:gap-2 text-xs lg:text-sm transition-colors whitespace-nowrap px-2');
         document.getElementById('view-' + tabName).classList.remove('hidden');
         document.getElementById('btn-' + tabName).className = 'tab-active h-full flex items-center gap-1 lg:gap-2 text-xs lg:text-sm transition-colors whitespace-nowrap px-2';
+    }
+
+    // V4.0 NEW: Gemini → Claude 빌더 릴레이 (0번 섹션 자동 하이라이트)
+    function switchToClaudeBuilderWithFocus() {
+        switchTab('builder');
+        setTimeout(() => {
+            const startInput = document.getElementById('in-start');
+            if (startInput) {
+                // 우측 패널 스크롤 최상단으로
+                const rightPanel = startInput.closest('.right-scroll-area');
+                if (rightPanel) rightPanel.scrollTop = 0;
+                // 좌측 패널도 최상단으로
+                const leftPanel = document.querySelector('#view-builder .left-scroll-area');
+                if (leftPanel) leftPanel.scrollTop = 0;
+                // 포커스 + 강조
+                startInput.focus();
+                startInput.classList.add('ring-4', 'ring-blue-400', 'bg-blue-50');
+                // 가이드 토스트 표시
+                showGuideToast();
+                setTimeout(() => {
+                    startInput.classList.remove('ring-4', 'ring-blue-400', 'bg-blue-50');
+                }, 3000);
+            }
+        }, 200);
+    }
+
+    function showGuideToast() {
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-20 right-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-4 rounded-xl shadow-2xl z-[100] max-w-sm';
+        toast.innerHTML = '<div class="flex items-start gap-2"><span class="text-2xl">🌱</span><div><p class="font-bold text-sm mb-1">Claude 빌더 도착!</p><p class="text-xs leading-relaxed">① 하이라이트된 <b>0번 시작점</b> 칸에 Gemini 결과를 <b>Ctrl+V</b>로 붙여넣기<br>② 나머지 섹션 선택하며 디자인 설정<br>③ 하단 보라색 버튼 클릭!</p></div></div>';
+        document.body.appendChild(toast);
+        toast.style.transition = 'opacity 0.5s';
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => document.body.removeChild(toast), 500); }, 7000);
     }
     function setText(id, text) {
         const input = document.getElementById(id);
@@ -1194,7 +1775,7 @@
         setTimeout(()=> { m.classList.remove('opacity-0'); m.firstElementChild.classList.remove('scale-95'); }, 10);
     }
     function confirmReset() {
-        ['in-start','in-audience','in-type','in-story','in-slides','in-system','in-visual','in-extras','in-output'].forEach(id => document.getElementById(id).value = '');
+        ['g-source','g-subject','g-objectives','g-output','g-extra','in-start','in-audience','in-type','in-story','in-slides','in-system','in-visual','in-extras','in-output'].forEach(id => document.getElementById(id).value = '');
         closeResetModal();
     }
     function closeResetModal() {
@@ -1330,8 +1911,126 @@ ${v.output || '- 비율: 16:9 (1920x1080)\n- 매수: 강의 시간에 맞춰\n- 
 ✅ If interactive prototype requested, use HTML-compatible interactions (clickable, hover, drag) - note that PPTX export will flatten these`;
         showModal(prompt.trim());
     }
+
+    // ============ Gemini 프롬프트 생성 함수 (V4.0 신규) ============
+    function generateGeminiPrompt() {
+        const v = {
+            source: document.getElementById('g-source').value,
+            subject: document.getElementById('g-subject').value,
+            objectives: document.getElementById('g-objectives').value,
+            output: document.getElementById('g-output').value,
+            extra: document.getElementById('g-extra').value
+        };
+        if (!v.subject) { showAlert('😅 <b>교과 & 학년(B)</b>을 먼저 선택해주세요!'); return; }
+        
+        const geminiPrompt = `[역할: 한국 교육과정 전문 "수업 자료 분석·정리 연구원"]
+
+═══════════════════════════════════
+🎯 이 요청의 맥락 (매우 중요!)
+═══════════════════════════════════
+당신은 "수업 슬라이드 제작 릴레이" 중 첫 번째 주자입니다.
+
+- 최종 목표: 교사가 Claude Design으로 슬라이드를 만드는 것
+- 당신의 역할: Claude Design이 못 읽는 자료(YouTube/PDF/웹사이트)를 대신 분석하여, 슬라이드에 들어갈 "내용 재료"를 정리·요약
+- 다음 주자(Claude Design)의 역할: 당신이 정리한 내용을 받아 고품질 디자인으로 변환
+
+즉, 당신은 "내용 연구원", Claude Design은 "디자이너"입니다.
+역할 분담을 정확히 지켜주세요.
+
+═══════════════════════════════════
+⚠️ 절대 하지 말 것 (디자인 간섭 금지)
+═══════════════════════════════════
+❌ 슬라이드 디자인·레이아웃 제안 금지
+❌ 색상·폰트·테마 언급 금지
+❌ "이렇게 슬라이드를 만드세요" 같은 디자인 지시 금지
+❌ PPT 제작 방법·도구 안내 금지
+❌ 슬라이드 구성(몇 장, 어떤 순서) 제안 금지
+
+위 항목은 Claude Design(다음 주자)이 담당합니다.
+
+═══════════════════════════════════
+✅ 반드시 해야 할 것 (내용 분석·정리)
+═══════════════════════════════════
+✅ 제공된 자료(YouTube/PDF/웹/이미지)를 정확히 분석
+✅ 수업에 쓸 "핵심 내용"만 뽑아서 체계적으로 요약
+✅ 교사가 바로 이해할 수 있도록 구조화된 텍스트로 정리
+✅ 모든 팩트에 출처 명시 "(출처: ~)"
+✅ 한국 2022 개정 교육과정·문화·학생 맥락 반영
+✅ 되묻지 말고 바로 작성 시작 (정보가 부족하면 교육과정 상식으로 보완)
+
+═══════════════════════════════════
+A. 정보 소스 (분석할 자료)
+═══════════════════════════════════
+${v.source || '- 기본 교육과정 지식 활용하여 정리'}
+
+※ YouTube 링크가 있다면 영상 내용을 시청·분석하여 반영
+※ PDF 파일이 첨부되어 있다면 내용을 분석하여 반영
+※ 웹사이트 URL이 있다면 해당 사이트 내용을 참고
+※ 이미지가 첨부되어 있다면 내용을 분석
+
+═══════════════════════════════════
+B. 수업 맥락
+═══════════════════════════════════
+${v.subject}
+
+═══════════════════════════════════
+C. 학습 목표
+═══════════════════════════════════
+${v.objectives || '- 2022 개정 교육과정 성취기준에 맞게 3가지 자동 도출 (행동동사 필수: "~을 설명할 수 있다", "~을 분석할 수 있다" 등)'}
+
+═══════════════════════════════════
+D. 정리해야 할 내용 항목
+═══════════════════════════════════
+${v.output || `- 학습 목표 (3가지, 행동동사 포함)
+- 도입: 동기유발 (5분)
+- 전개: 핵심 개념 3-5개 (정의+예시)
+- 전개: 실험/활동 가이드
+- 실생활 연결 (일상 예시 5개)
+- 정리: 핵심 요약 (3줄)
+- 형성 평가: 퀴즈 5문제 (정답+해설)
+- 오개념 주의사항
+- 심화 학습 자료 링크 추천`}
+
+═══════════════════════════════════
+E. 추가 요구사항
+═══════════════════════════════════
+${v.extra || `- 난이도: 표준 수준
+- 어조: 친근한 해요체
+- 한국 맥락: 한국 교육과정·문화·사례 중심
+- 출처: 주요 정보에 출처/근거 명시`}
+
+═══════════════════════════════════
+📋 출력 형식 (중요)
+═══════════════════════════════════
+✅ 언어: 한국어
+✅ 형식: 마크다운 (### 제목, - 목록 활용)
+✅ 구조: D 항목을 순서대로 정리하되, 각 섹션을 ### 제목으로 구분
+✅ 분량: 교사가 슬라이드 10-20장 분량의 수업에 쓸 수 있을 만큼 충분히 상세하게
+✅ 실생활 예시는 한국 학생이 공감할 구체적 사례로
+✅ 형성 평가 문제에는 정답과 간단한 해설 포함
+✅ 오개념은 실제 교실에서 자주 관찰되는 학생들의 착각 중심
+
+═══════════════════════════════════
+🔄 다음 단계 안내 (교사에게)
+═══════════════════════════════════
+이 결과를 복사하여 "Claude 빌더"의 0번 시작점 섹션에 붙여넣으면, Claude Design이 이 내용을 고품질 슬라이드 디자인으로 변환합니다.
+
+이제 위 자료를 분석하여 "수업 내용"을 체계적으로 정리해주세요. (디자인 이야기는 하지 말고, 내용에만 집중!)`;
+        
+        showModal(geminiPrompt.trim());
+    }
+
     document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); generateAndCopy(); }
+        if (e.ctrlKey && e.key === 'Enter') {
+            e.preventDefault();
+            // 현재 활성 탭에 따라 다른 함수 호출
+            const geminiTab = document.getElementById('view-gemini');
+            if (!geminiTab.classList.contains('hidden')) {
+                generateGeminiPrompt();
+            } else {
+                generateAndCopy();
+            }
+        }
     });
 
     const templates = [
